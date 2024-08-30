@@ -8,6 +8,7 @@ import { Reading } from '../../entities/Reading';
 export const readingSchema:Schema = new mongoose.Schema({
     uuid: {type: String},
     code: {type: String},
+    image: {type: String},
     reading: {type: Number},
     readingDatetime: {type: Date},
     readingType: {type: String},
@@ -19,7 +20,6 @@ export const readingModel = mongoose.model('reading',readingSchema);
 export class MongoReadingsRepository implements IReadingsRepository{
     public reading: Reading|any;
     constructor(){ 
-        this.connection(); 
     }
     
    
@@ -36,6 +36,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
 
     async findByCode(filter: any): Promise<Reading|any> {
         try {
+            this.connection(); 
+            
             const datetime = new Date(filter.datetime);
             const startOfMonth = new Date(datetime.getFullYear(), datetime.getMonth(), 1);
             const endOfMonth = new Date(datetime.getFullYear(), datetime.getMonth() + 1, 0, 23, 59, 59, 999);
@@ -54,6 +56,7 @@ export class MongoReadingsRepository implements IReadingsRepository{
                     this.reading = new Reading({
                         uuid: doc.uuid,
                         code: doc.code,
+                        image: doc.image,
                         reading: doc.reading,
                         readingDatetime: doc.readingDatetime,
                         readingType: doc.readingType,
@@ -75,6 +78,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
  
     async findByMeasure(measure: any): Promise<any> {
         try {
+            this.connection(); 
+
             const docs = await readingModel.find({uuid: measure.uuid}).exec();
             
             if(docs.length > 0){
@@ -82,6 +87,7 @@ export class MongoReadingsRepository implements IReadingsRepository{
                     this.reading = new Reading({
                         uuid: doc.uuid,
                         code: doc.code,
+                        image: doc.image,
                         reading: doc.reading,
                         readingDatetime: doc.readingDatetime,
                         readingType: doc.readingType,
@@ -100,16 +106,35 @@ export class MongoReadingsRepository implements IReadingsRepository{
             throw error
         }
     }
-    list(filter: any): Promise<any> {
-        throw new Error('Method not implemented.');
+    async list(filter: any): Promise<any> {
+        try {
+            this.connection(); 
+            
+            const docs = await readingModel.find(filter).exec();
+            
+            if(docs.length > 0){
+                return docs;
+
+            }else{
+                return null;
+
+            }
+
+        } catch (error) {
+            throw error
+            
+        }
     }
     async save(reading: Reading): Promise<Reading|string>{
         try {
+            this.connection(); 
+
             const uuid = uuidv4();
             const create = new readingModel({
                 uuid: uuid,
                 reading: reading.reading,
                 code: reading.code,
+                image: reading.image,
                 readingType: reading.readingType,
                 readingDatetime: reading.readingDatetime,
                 readingConfirmed: false
@@ -120,6 +145,7 @@ export class MongoReadingsRepository implements IReadingsRepository{
             this.reading = new Reading({
                 uuid: doc.uuid,
                 code: doc.code,
+                image: doc.image,
                 reading: doc.reading,
                 readingDatetime: doc.readingDatetime,
                 readingType: doc.readingType,
@@ -136,6 +162,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
 
     async update(reading: any,id:string): Promise<any> {
         try {
+            this.connection(); 
+            
             const result = await readingModel.updateOne(
                 { uuid: id }, 
                 { $set: reading } 

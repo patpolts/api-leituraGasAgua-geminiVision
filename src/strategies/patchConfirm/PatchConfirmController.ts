@@ -38,6 +38,16 @@ export class PatchConfirmController{
                 measure_uuid,confirmed_value
             });
             
+            if(result == 409) return res.status(409).json({
+                "error_code": "CONFIRMATION_DUPLICATE",
+                "error_description": "Leitura do mês ja realizada ou já confirmada!"
+            });
+
+            if(result == 404) return res.status(404).json({
+                "error_code": "MEASURE_NOT_FOUND",
+                "error_description": "Leitura do mÊs ja realizada ou não encontrada!"
+            });
+
             return res.status(200).json(result);
 
         } catch (error) {

@@ -14,17 +14,11 @@ export class PatchConfirmStrategy{
         });
 
         if(!check){
-            throw {
-                "error_code": "MEASURE_NOT_FOUND",
-                "error_description": "Leitura do mÊs ja realizada ou não encontrada!"
-            }
+            return 404;
         }
         
         if(check?.readingConfirmed){
-            throw {
-                "error_code": "CONFIRMATION_DUPLICATE",
-                "error_description": "Leitura do mês ja realizada ou já confirmada!"
-            }
+            return 409;
 
         }
 
@@ -32,7 +26,7 @@ export class PatchConfirmStrategy{
             await this.uploadsRepository.update({readingConfirmed: true},data.measure_uuid)
             : this.uploadsRepository.update({reading: data.confirmed_value ,readingConfirmed: true},data.measure_uuid);
         
-        console.log("atualizado? ",checkValue)
+        
         return checkValue ? {"success": true} : {"success": false};
 
 
