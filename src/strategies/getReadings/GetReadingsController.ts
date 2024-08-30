@@ -14,6 +14,13 @@ export class GetReadingsController{
                 customer_code,measure_type
             });
             
+            if(result == 404){
+                return res.status(404).json({
+                    "error_code": "MEASURE_NOT_FOUND",
+                    "error_description": `Nenhuma leitura encontrada para código ${customer_code}`
+                })
+            }
+            
             return res.status(200).json(result);
 
         } catch (error) {

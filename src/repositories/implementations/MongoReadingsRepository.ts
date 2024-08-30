@@ -103,8 +103,22 @@ export class MongoReadingsRepository implements IReadingsRepository{
             throw error
         }
     }
-    list(filter: any): Promise<any> {
-        throw new Error('Method not implemented.');
+    async list(filter: any): Promise<any> {
+        try {
+            const docs = await readingModel.find(filter).exec();
+            
+            if(docs.length > 0){
+                return docs;
+
+            }else{
+                return null;
+
+            }
+
+        } catch (error) {
+            throw error
+            
+        }
     }
     async save(reading: Reading): Promise<Reading|string>{
         try {
