@@ -7,6 +7,6 @@ export class GetReadingsStrategy{
     ){}
 
     async execute(data: IGetReadingsDTO): Promise<any>{
-        
+        return data
     }
 }
