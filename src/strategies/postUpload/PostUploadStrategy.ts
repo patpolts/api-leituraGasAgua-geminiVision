@@ -45,6 +45,7 @@ export class PostUploadStrategy{
             const save = await this.uploadsRepository.save({
                 uuid: null,
                 code: data.customer_code,
+                image: response.uri,
                 reading: response.reading,
                 readingType: data.measure_type,
                 readingConfirmed: false,

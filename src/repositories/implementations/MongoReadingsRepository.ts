@@ -54,8 +54,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
                 const readings = docs.map((doc) => {
                     this.reading = new Reading({
                         uuid: doc.uuid,
-                        image: doc.image,
                         code: doc.code,
+                        image: doc.image,
                         reading: doc.reading,
                         readingDatetime: doc.readingDatetime,
                         readingType: doc.readingType,
@@ -83,8 +83,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
                 const readings = docs.map((doc) => {
                     this.reading = new Reading({
                         uuid: doc.uuid,
-                        image: doc.image,
                         code: doc.code,
+                        image: doc.image,
                         reading: doc.reading,
                         readingDatetime: doc.readingDatetime,
                         readingType: doc.readingType,
