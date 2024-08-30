@@ -53,8 +53,6 @@ export class PostUploadStrategy{
             });
 
             if(save instanceof Error || !save?.uuid){
-                console.log("erro na requisição")
-                console.error(response)
                 throw {
                     "error_code": "INVALID_DATA",
                     "error_descrition": "Houve um erro ao tentar salvar a leitura, verifique os dados enviados!"
@@ -68,10 +66,7 @@ export class PostUploadStrategy{
             }
 
         }else{
-            return {
-                "error_code": "DOUBLE_REPORT",
-                "error_descrition": "Leitura do mês já foi realizada!"
-            }
+            return 409
         }
 
     }

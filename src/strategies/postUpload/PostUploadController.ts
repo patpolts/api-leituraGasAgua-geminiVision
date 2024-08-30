@@ -69,6 +69,11 @@ export class PostUploadController{
                 image,customer_code,measure_datetime,measure_type
             });
 
+            if(result == 409) return res.status(409).json({
+                "error_code": "DOUBLE_REPORT",
+                "error_descrition": "Leitura do mês já foi realizada!"
+            })
+
             return res.status(200).json(result);
         } catch (error) {
             console.error(error);
