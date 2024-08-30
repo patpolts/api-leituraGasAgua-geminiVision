@@ -1,0 +1,1 @@
+# api-leituraGasAgua-geminiVision
