@@ -8,7 +8,7 @@ export class GetReadingsStrategy{
 
     async execute(data: IGetReadingsDTO): Promise<any>{
         const response = data.measure_type ? 
-            await this.uploadsRepository.list({code: data.customer_code, readingType: data.measure_type})
+            await this.uploadsRepository.list({code: data.customer_code, readingType: data.measure_type.toUpperCase()})
                 : await this.uploadsRepository.list({code: data.customer_code});
 
         
@@ -17,7 +17,7 @@ export class GetReadingsStrategy{
         }
 
         let results:any = [];
-        
+
         response.map((res:any) => {
             results.push({
                 "measure_uuid": res.uuid,

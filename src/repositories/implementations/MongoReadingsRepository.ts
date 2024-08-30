@@ -20,7 +20,6 @@ export const readingModel = mongoose.model('reading',readingSchema);
 export class MongoReadingsRepository implements IReadingsRepository{
     public reading: Reading|any;
     constructor(){ 
-        this.connection(); 
     }
     
    
@@ -37,6 +36,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
 
     async findByCode(filter: any): Promise<Reading|any> {
         try {
+            this.connection(); 
+            
             const datetime = new Date(filter.datetime);
             const startOfMonth = new Date(datetime.getFullYear(), datetime.getMonth(), 1);
             const endOfMonth = new Date(datetime.getFullYear(), datetime.getMonth() + 1, 0, 23, 59, 59, 999);
@@ -77,6 +78,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
  
     async findByMeasure(measure: any): Promise<any> {
         try {
+            this.connection(); 
+
             const docs = await readingModel.find({uuid: measure.uuid}).exec();
             
             if(docs.length > 0){
@@ -105,6 +108,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
     }
     async list(filter: any): Promise<any> {
         try {
+            this.connection(); 
+            
             const docs = await readingModel.find(filter).exec();
             
             if(docs.length > 0){
@@ -122,6 +127,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
     }
     async save(reading: Reading): Promise<Reading|string>{
         try {
+            this.connection(); 
+
             const uuid = uuidv4();
             const create = new readingModel({
                 uuid: uuid,
@@ -155,6 +162,8 @@ export class MongoReadingsRepository implements IReadingsRepository{
 
     async update(reading: any,id:string): Promise<any> {
         try {
+            this.connection(); 
+            
             const result = await readingModel.updateOne(
                 { uuid: id }, 
                 { $set: reading } 
