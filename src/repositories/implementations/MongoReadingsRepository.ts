@@ -8,6 +8,7 @@ import { Reading } from '../../entities/Reading';
 export const readingSchema:Schema = new mongoose.Schema({
     uuid: {type: String},
     code: {type: String},
+    image: {type: String},
     reading: {type: Number},
     readingDatetime: {type: Date},
     readingType: {type: String},
@@ -53,6 +54,7 @@ export class MongoReadingsRepository implements IReadingsRepository{
                 const readings = docs.map((doc) => {
                     this.reading = new Reading({
                         uuid: doc.uuid,
+                        image: doc.image,
                         code: doc.code,
                         reading: doc.reading,
                         readingDatetime: doc.readingDatetime,
@@ -81,6 +83,7 @@ export class MongoReadingsRepository implements IReadingsRepository{
                 const readings = docs.map((doc) => {
                     this.reading = new Reading({
                         uuid: doc.uuid,
+                        image: doc.image,
                         code: doc.code,
                         reading: doc.reading,
                         readingDatetime: doc.readingDatetime,
@@ -110,6 +113,7 @@ export class MongoReadingsRepository implements IReadingsRepository{
                 uuid: uuid,
                 reading: reading.reading,
                 code: reading.code,
+                image: reading.image,
                 readingType: reading.readingType,
                 readingDatetime: reading.readingDatetime,
                 readingConfirmed: false
@@ -120,6 +124,7 @@ export class MongoReadingsRepository implements IReadingsRepository{
             this.reading = new Reading({
                 uuid: doc.uuid,
                 code: doc.code,
+                image: doc.image,
                 reading: doc.reading,
                 readingDatetime: doc.readingDatetime,
                 readingType: doc.readingType,
