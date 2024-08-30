@@ -13,4 +13,8 @@ API Feita em node.js que utiliza alguns príncipios SOLID e de Clean Code, com i
  * PATCH /confirm  
    Atualiza, se necessário, os dados de leitura da imagem no mongoDB  
  * GET /{customer_code}/list  
-   lista os dados salvos no mongoDB
+   lista os dados salvos no mongoDB  
+
+## TODO  
+ - Adicionar testes com jest   
+ - Adicionar API que gera uma imagem base64
