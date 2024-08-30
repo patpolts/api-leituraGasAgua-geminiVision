@@ -8,6 +8,8 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
+RUN mkdir -p /app/uploads
+
 RUN npm run build
 
 EXPOSE 8000
